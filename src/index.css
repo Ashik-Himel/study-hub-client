@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .btn {
+    @apply text-base normal-case h-auto min-h-[40px] rounded-full px-5;
+  }
+  .btn-primary {
+    @apply text-white;
+  }
+  .btn-outline {
+    @apply hover:!text-white;
+  }
+}
