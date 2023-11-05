@@ -13,3 +13,16 @@
     @apply hover:!text-white;
   }
 }
+
+.react-datepicker-wrapper {
+  @apply w-full;
+}
+.react-datepicker-wrapper > * {
+  @apply !flex items-center;
+}
+.react-datepicker-wrapper input {
+  @apply !pl-8;
+}
+.react-datepicker__triangle {
+  @apply !-left-[120px]
+}

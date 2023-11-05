@@ -87,17 +87,17 @@ const Register = () => {
 
             <form onSubmit={handleSubmit}>
               <label htmlFor="name" className="block font-semibold mb-2">Your Name</label>
-              <input className="input w-full bg-white border-2 border-primary mb-5" type="text" name="name" id="name" placeholder="Enter your name" required />
+              <input className="input w-full border-gray-300 mb-5" type="text" name="name" id="name" placeholder="Enter your name" required />
 
               <label htmlFor="photo" className="block font-semibold mb-2">Photo URL</label>
-              <input className="input w-full bg-white border-2 border-primary mb-5" type="text" name="photo" id="photo" placeholder="Enter your photo url" required />
+              <input className="input w-full border-gray-300 mb-5" type="text" name="photo" id="photo" placeholder="Enter your photo url" required />
 
               <label htmlFor="email" className="block font-semibold mb-2">Email</label>
-              <input className="input w-full bg-white border-2 border-primary mb-5" type="email" name="email" id="email" placeholder="Enter your email address" required />
+              <input className="input w-full border-gray-300 mb-5" type="email" name="email" id="email" placeholder="Enter your email address" required />
 
               <label htmlFor="password" className="block font-semibold mb-2">Password</label>
               <div className="relative">
-                <input className="input w-full bg-white border-2 border-primary" onChange={handlePassOnChange} type={showPass ? "text": "password"} name="password" id="password" placeholder="Enter your password" required />
+                <input className="input w-full border-gray-300" onChange={handlePassOnChange} type={showPass ? "text": "password"} name="password" id="password" placeholder="Enter your password" required />
                 {
                   showEye ? showPass ? <AiFillEyeInvisible className="absolute top-1/2 right-4 -translate-y-1/2 text-2xl cursor-pointer" onClick={() => setShowPass(!showPass)} /> : <AiFillEye className="absolute top-1/2 right-4 -translate-y-1/2 text-2xl cursor-pointer" onClick={() => setShowPass(!showPass)} /> : ''
                 }

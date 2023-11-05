@@ -5,6 +5,11 @@ import Home from "../pages/Home";
 import PrivateRouteAlt from "../manageRoute/PrivateRouteAlt";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Assignments from "../pages/Assignments";
+import CreateAssignment from "../pages/CreateAssignment";
+import MyAssignments from "../pages/MyAssignments";
+import SubmittedAssignments from "../pages/SubmittedAssignments";
+import PrivateRoute from "../manageRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +28,22 @@ export const router = createBrowserRouter([
       {
         path: '/register',
         element: <PrivateRouteAlt><Register /></PrivateRouteAlt>
+      },
+      {
+        path: '/assignments',
+        element: <Assignments />
+      },
+      {
+        path: '/create-assignment',
+        element: <PrivateRoute><CreateAssignment /></PrivateRoute>
+      },
+      {
+        path: '/my-assignments',
+        element: <PrivateRoute><MyAssignments /></PrivateRoute>
+      },
+      {
+        path: '/submitted-assignments',
+        element: <PrivateRoute><SubmittedAssignments /></PrivateRoute>
       }
     ]
   }
