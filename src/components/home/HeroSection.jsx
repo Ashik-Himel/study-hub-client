@@ -3,7 +3,7 @@ import heroImg from '../../assets/images/hero-img.png';
 
 const HeroSection = () => {
   return (
-    <section className="py-4 sm:py-8 md:py-4">
+    <section className="py-8 md:py-4">
       <div className="container">
         <div className="flex flex-col md:flex-row justify-between items-center [&>*]:flex-1">
           <div>
