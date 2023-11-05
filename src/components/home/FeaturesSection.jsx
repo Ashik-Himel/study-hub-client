@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const FeaturesSection = () => {
   return (
-    <section className='mt-12 lg:mt-16'>
+    <section className='mt-16'>
       <div className="container">
         <h2 className="text-3xl font-semibold mb-2 text-center">StudyHub&apos;s <span className="text-primary">Features</span></h2>
         <p className="max-w-[500px] mx-auto text-center mb-8">Here are given all the features that you will use to improve your group study with StudyHub!</p>
