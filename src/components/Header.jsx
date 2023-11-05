@@ -6,6 +6,7 @@ import HeroSection from "./home/HeroSection";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase.config";
 import toast from "react-hot-toast";
+import { axiosInstance } from "../hooks/useAxios";
 
 const Header = () => {
   const {user, userLoaded} = useContext(GlobalContext);
@@ -16,6 +17,8 @@ const Header = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
+        axiosInstance.get('/logout')
+          .then(res => console.log(res.data));
         toast.success('Logout Successful !!!');
       })
       .catch(error => {

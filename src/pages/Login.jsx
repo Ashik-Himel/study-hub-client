@@ -7,6 +7,7 @@ import { auth } from "../firebase.config";
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import toast from "react-hot-toast";
 import { GlobalContext } from "../context/ContextProvider";
+import { axiosInstance } from "../hooks/useAxios";
 
 const Login = () => {
   const {setUser} = useContext(GlobalContext);
@@ -23,7 +24,10 @@ const Login = () => {
     const password = e.target.password.value;
 
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
+      .then((userCredential) => {
+        axiosInstance.post('/login', {email})
+          .then(res => console.log(res.data));
+        setUser(userCredential.user)
         toast.success("Login Successful !!!");
       })
       .catch((error) => {
@@ -33,8 +37,10 @@ const Login = () => {
   const googleLogin = () => {
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        setUser(result.user);
+      .then((userCredential) => {
+        axiosInstance.post('/login', {email: userCredential.user?.email})
+          .then(res => console.log(res.data));
+        setUser(userCredential.user)
         toast.success('Login Successful !!!');
       })
       .catch(error => {

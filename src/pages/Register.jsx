@@ -7,6 +7,7 @@ import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, up
 import { auth } from "../firebase.config";
 import toast from "react-hot-toast";
 import { GlobalContext } from "../context/ContextProvider";
+import { axiosInstance } from "../hooks/useAxios";
 
 const Register = () => {
   const {setUser} = useContext(GlobalContext);
@@ -25,9 +26,12 @@ const Register = () => {
     const password = e.target.password.value;
     
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
+      .then((userCredential) => {
         updateProfile(auth.currentUser, {displayName, photoURL})
           .then(() => {
+            axiosInstance.post('/login', {email})
+              .then(res => console.log(res.data));
+            setUser(userCredential.user)
             toast.success("Registration Successful !!!");
           })
           .catch((error) => {
@@ -41,8 +45,10 @@ const Register = () => {
   const googleLogin = () => {
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        setUser(result.user);
+      .then((userCredential) => {
+        axiosInstance.post('/login', {email: userCredential.user?.email})
+          .then(res => console.log(res.data));
+        setUser(userCredential.user)
         toast.success('Login Successful !!!');
       })
       .catch(error => {
