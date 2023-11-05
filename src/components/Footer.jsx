@@ -11,8 +11,8 @@ const Footer = () => {
               <img className="max-w-[30px]" src="/favicon.png" alt="Brand Icon" />
               <span className="text-2xl font-semibold"><span className="text-primary">Study</span>Hub</span>
             </div>
-            <p className='max-w-[300px] mt-4'>Let&apos;s study together with friends and get higher facilities in group study with this platform.</p>
-            <div className='text-2xl text-primary flex items-center gap-4 mt-4'>
+            <p className='max-w-[400px] mt-3'>Let&apos;s study together with friends and get higher facilities in group study with this platform.</p>
+            <div className='text-2xl text-primary flex items-center gap-4 mt-6'>
               <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><BsFacebook /></a>
               <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><BsInstagram /></a>
               <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer"><BsTwitter /></a>
