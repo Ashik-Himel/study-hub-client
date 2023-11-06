@@ -44,8 +44,10 @@ const Assignments = () => {
               assignments?.map(assignment => <AssignmentCard key={assignment._id} assignment={assignment} />)
             }
           </div> : <div className="mt-10 text-center">
-            <img className="w-[150px] mx-auto mb-4" src={emptyIcon} alt="Empty Icon" />
-            <h3 className="text-2xl sm:text-3xl font-medium">No Assignment Found !!!</h3>
+            <div className="container">
+              <img className="w-[150px] mx-auto mb-4" src={emptyIcon} alt="Empty Icon" />
+              <h3 className="text-2xl sm:text-3xl font-medium">No Assignment Found !!!</h3>
+            </div>
           </div> : <div className="mt-12 md:mt-16 text-center">
             <span className="loading loading-spinner loading-lg text-primary"></span>
           </div>

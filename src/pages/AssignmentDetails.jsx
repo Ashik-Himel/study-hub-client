@@ -49,7 +49,7 @@ const AssignmentDetails = () => {
         </div>
       </section>
 
-      <SubmitAssignmentModal showModal={showModal} setShowModal={setShowModal} />
+      <SubmitAssignmentModal showModal={showModal} setShowModal={setShowModal} assignmentId={assignment?._id} assignmentTitle={assignment?.title} assignmentMarks={assignment?.marks} />
     </main>
   );
 };

@@ -5,7 +5,7 @@ import { axiosInstance } from '../hooks/useAxios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const SubmitAssignmentModal = ({showModal, setShowModal}) => {
+const SubmitAssignmentModal = ({showModal, setShowModal, assignmentId, assignmentTitle, assignmentMarks}) => {
   const {user} = useContext(GlobalContext);
   const navigate = useNavigate();
   const handleSubmit = e => {
@@ -15,8 +15,11 @@ const SubmitAssignmentModal = ({showModal, setShowModal}) => {
     const pdfLink = form.pdfLink.value;
     const note = form.note.value;
     const status = "pending";
-    const submittedBy = user?.email;
-    const submittedAssignment = {pdfLink, note, status, submittedBy}
+    const submittedBy = {
+      name: user?.displayName,
+      email: user?.email
+    };
+    const submittedAssignment = {assignmentId, assignmentTitle, assignmentMarks, pdfLink, note, status, submittedBy};
 
     axiosInstance.post('/submitted-assignments', submittedAssignment, {headers: {Authorization: user?.email}})
       .then(res => {
@@ -31,7 +34,7 @@ const SubmitAssignmentModal = ({showModal, setShowModal}) => {
   }
 
   return (
-    <section className="fixed w-screen h-screen left-0 right-0 bg-black bg-opacity-40 flex justify-center items-center transition-[top] duration-300" style={showModal ? {top: "0px"} : {top: "-100%"}}>
+    <section className="fixed w-screen h-screen left-0 right-0 bg-black bg-opacity-40 flex justify-center items-center transition-[top] duration-300 z-40" style={showModal ? {top: "0px"} : {top: "-100%"}}>
       <form className="bg-white w-full max-w-[500px] m-6 p-6 rounded-lg" onSubmit={handleSubmit}>
         <h2 className="text-3xl font-medium mb-6 text-center">Submit Assignment</h2>
         <label className="font-semibold block mb-2" htmlFor="pdfLink">PDF Link</label>
@@ -42,7 +45,7 @@ const SubmitAssignmentModal = ({showModal, setShowModal}) => {
 
         <div className="flex justify-center items-center gap-2">
           <button className="btn btn-primary" type="submit">Submit</button>
-          <button className="btn btn-primary btn-outline" onClick={() => setShowModal(false)}>Close</button>
+          <button className="btn btn-primary btn-outline" onClick={() => setShowModal(false)} type='button'>Close</button>
         </div>
       </form>
     </section>
@@ -53,5 +56,8 @@ export default SubmitAssignmentModal;
 
 SubmitAssignmentModal.propTypes = {
   showModal: PropTypes.bool,
-  setShowModal: PropTypes.func
+  setShowModal: PropTypes.func,
+  assignmentId: PropTypes.string,
+  assignmentTitle: PropTypes.string,
+  assignmentMarks: PropTypes.string
 }
