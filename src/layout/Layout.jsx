@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 
 const Layout = () => {
   return (
-    <>
+    <div className="min-h-screen flex flex-col [&>*:nth-child(2)]:flex-1">
       <Header />
       <Outlet />
       <Footer />
@@ -13,7 +13,7 @@ const Layout = () => {
         position="top-center"
         reverseOrder={false}
       />
-    </>
+    </div>
   );
 };
 

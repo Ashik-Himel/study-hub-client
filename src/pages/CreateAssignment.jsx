@@ -22,7 +22,8 @@ const CreateAssignment = () => {
     const image = form.image.value;
     const difficultyLevel = form["difficulty-level"].value;
     const description = form.description.value;
-    const createAssignment = {title, marks, thumbnail, image, difficultyLevel, dueDate, description};
+    const author = user?.email;
+    const createAssignment = {title, marks, thumbnail, image, difficultyLevel, dueDate, description, author};
 
     axiosInstance.post('/assignments', createAssignment, {headers: {Authorization: user?.email}})
       .then(res => {

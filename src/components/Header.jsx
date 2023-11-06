@@ -17,7 +17,7 @@ const Header = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        axiosInstance.get('/logout')
+        axiosInstance.get('/logout', {headers: {Authorization: user?.email}})
           .then(res => console.log(res.data));
         toast.success('Logout Successful !!!');
       })
