@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../hooks/useAxios";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../context/ContextProvider";
+import SubmitAssignmentModal from "../components/SubmitAssignmentModal";
 
 const assignmentFetcher = async(id, email) => {
   const res = await axiosInstance(`/assignments/${id}`, {headers: {Authorization: email}});
@@ -13,6 +14,7 @@ const assignmentFetcher = async(id, email) => {
 const AssignmentDetails = () => {
   const {user} = useContext(GlobalContext);
   const {id} = useParams();
+  const [showModal, setShowModal] = useState(false);
   const {data: assignment, isLoading} = useQuery({queryKey: ['assignment', id], queryFn: () => assignmentFetcher(id, user?.email)});
   const date = new Date(assignment?.dueDate);
   const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -38,7 +40,7 @@ const AssignmentDetails = () => {
               <span className="block mb-1"><span className="font-bold">Marks:</span> {assignment?.marks}</span>
               <span className="block mb-1"><span className="font-bold">Due Date:</span> {date.getDate()} {monthArray[date.getMonth()]}, {date.getFullYear()}</span>
               <span className="block mb-1"><span className="font-bold">Difficulty Level:</span> {assignment?.difficultyLevel}</span>
-              <button className="btn btn-primary mt-4">Take Assignment</button>
+              <button className="btn btn-primary mt-4" onClick={() => setShowModal(true)}>Take Assignment</button>
             </div>
           </div>
 
@@ -46,6 +48,8 @@ const AssignmentDetails = () => {
           <p>{assignment?.description}</p>
         </div>
       </section>
+
+      <SubmitAssignmentModal showModal={showModal} setShowModal={setShowModal} />
     </main>
   );
 };

@@ -1,0 +1,57 @@
+import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { GlobalContext } from '../context/ContextProvider';
+import { axiosInstance } from '../hooks/useAxios';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+
+const SubmitAssignmentModal = ({showModal, setShowModal}) => {
+  const {user} = useContext(GlobalContext);
+  const navigate = useNavigate();
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    const form = e.target;
+    const pdfLink = form.pdfLink.value;
+    const note = form.note.value;
+    const status = "pending";
+    const submittedBy = user?.email;
+    const submittedAssignment = {pdfLink, note, status, submittedBy}
+
+    axiosInstance.post('/submitted-assignments', submittedAssignment, {headers: {Authorization: user?.email}})
+      .then(res => {
+        if (res?.data?.insertedId) {
+          toast.success("Assignment submitted !!!")
+          navigate('/assignments');
+        }
+      })
+      .catch(err => {
+        toast.error(err.message)
+      })
+  }
+
+  return (
+    <section className="fixed w-screen h-screen left-0 right-0 bg-black bg-opacity-40 flex justify-center items-center transition-[top] duration-300" style={showModal ? {top: "0px"} : {top: "-100%"}}>
+      <form className="bg-white w-full max-w-[500px] m-6 p-6 rounded-lg" onSubmit={handleSubmit}>
+        <h2 className="text-3xl font-medium mb-6 text-center">Submit Assignment</h2>
+        <label className="font-semibold block mb-2" htmlFor="pdfLink">PDF Link</label>
+        <input className="input w-full border-gray-300 mb-4" type="url" name="pdfLink" id="pdfLink" placeholder="Your assignment's pdf link" required />
+
+        <label className="font-semibold block mb-2" htmlFor="note">Note (Optional)</label>
+        <textarea className="input resize-none pt-2 h-[100px] w-full border-gray-300 mb-4" name="note" id="note" placeholder="Add note"></textarea>
+
+        <div className="flex justify-center items-center gap-2">
+          <button className="btn btn-primary" type="submit">Submit</button>
+          <button className="btn btn-primary btn-outline" onClick={() => setShowModal(false)}>Close</button>
+        </div>
+      </form>
+    </section>
+  );
+};
+
+export default SubmitAssignmentModal;
+
+SubmitAssignmentModal.propTypes = {
+  showModal: PropTypes.bool,
+  setShowModal: PropTypes.func
+}
