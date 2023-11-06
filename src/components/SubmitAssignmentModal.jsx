@@ -15,11 +15,9 @@ const SubmitAssignmentModal = ({showModal, setShowModal, assignmentId, assignmen
     const pdfLink = form.pdfLink.value;
     const note = form.note.value;
     const status = "pending";
-    const submittedBy = {
-      name: user?.displayName,
-      email: user?.email
-    };
-    const submittedAssignment = {assignmentId, assignmentTitle, assignmentMarks, pdfLink, note, status, submittedBy};
+    const authorName = user?.displayName;
+    const authorEmail = user?.email;
+    const submittedAssignment = {assignmentId, assignmentTitle, assignmentMarks, pdfLink, note, status, authorName, authorEmail};
 
     axiosInstance.post('/submitted-assignments', submittedAssignment, {headers: {Authorization: user?.email}})
       .then(res => {

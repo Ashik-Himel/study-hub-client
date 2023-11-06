@@ -9,7 +9,7 @@ const SubmittedAssignmentRow = ({assignment, refetch}) => {
     <>
       <tr>
         <td>{assignment?.assignmentTitle}</td>
-        <td>{assignment?.submittedBy?.name}</td>
+        <td>{assignment?.authorName}</td>
         <td>{assignment?.assignmentMarks}</td>
         <td><button className="btn btn-primary !text-sm !min-h-[38px] !px-4" onClick={() => setShowModal(true)}>Give Mark</button></td>
       </tr>

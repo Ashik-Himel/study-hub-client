@@ -21,11 +21,14 @@ const SubmittedAssignments = () => {
     </div>
   );
 
-  if (!submittedAssignments.length) return (
+  if (!submittedAssignments?.length) return (
     <div className="mt-10 text-center">
+      <Helmet>
+        <title>Submitted Assignments - StudyHub</title>
+      </Helmet>
       <div className="container">
         <img className="w-[150px] mx-auto mb-4" src={emptyIcon} alt="Empty Icon" />
-        <h3 className="text-2xl sm:text-3xl font-medium">No Submitted Assignment Found !!!</h3>
+        <h3 className="text-2xl sm:text-3xl font-medium">No Assignment Found !!!</h3>
       </div>
     </div>
   );
@@ -33,15 +36,15 @@ const SubmittedAssignments = () => {
   return (
     <main>
       <Helmet>
-        <title>Submitted Assignment - StudyHub</title>
+        <title>Submitted Assignments - StudyHub</title>
       </Helmet>
 
       <section className="mt-10">
         <div className="container">
-          <h2 className="text-3xl font-medium text-primary text-center mb-6">Submitted Assignment</h2>
+          <h2 className="text-3xl font-medium text-primary text-center mb-6">Submitted Assignments</h2>
 
           <div className="overflow-auto">
-            <table className="w-full min-w-[700px] max-w-[900px] mx-auto text-center border border-gray-500 [&_tr]:border-b [&_tr]:border-gray-500 [&_th]:py-3 [&_td]:py-2 [&_th]:px-4 [&_td]:px-4">
+            <table className="w-full min-w-[700px] max-w-[900px] mx-auto text-center border border-gray-500 [&_tr]:border-t [&_tr]:border-gray-500 [&_th]:py-3 [&_td]:py-2 [&_th]:px-4 [&_td]:px-4">
               <thead className="bg-primary text-white">
                 <tr>
                   <th>Title</th>

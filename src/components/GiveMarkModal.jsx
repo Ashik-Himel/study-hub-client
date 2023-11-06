@@ -11,7 +11,7 @@ const GiveMarkModal = ({showModal, setShowModal, assignment, refetch}) => {
 
     const updatedAssignment = {...assignment}
     updatedAssignment.status = "completed";
-    updatedAssignment.givenMark = e.target.mark.value;
+    updatedAssignment.obtainedMark = e.target.mark.value;
     updatedAssignment.feedback = e.target.feedback.value;
     delete updatedAssignment._id;
 
