@@ -1,8 +1,67 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { GlobalContext } from '../context/ContextProvider';
+import Swal from 'sweetalert2'
+import { axiosInstance } from '../hooks/useAxios';
+import toast from 'react-hot-toast';
 
-const AssignmentCard = ({assignment}) => {
-  const {_id, thumbnail, title, marks, difficultyLevel} = assignment;
+const AssignmentCard = ({assignment, refetch}) => {
+  const {user} = useContext(GlobalContext);
+  const {_id, thumbnail, title, marks, difficultyLevel, author} = assignment;
+  const navigate = useNavigate();
+
+  const handleUpdate = () => {
+    if (author === user?.email) {
+      navigate(`/assignments/update/${_id}`);
+    }
+    else {
+      Swal.fire({
+        title: "Not Possible!",
+        text: "You can't update other's assignments",
+        icon: "error",
+        confirmButtonColor: "#610C9F"
+      });
+    }
+  }
+  const handleDelete = () => {
+    if (author === user?.email) {
+      Swal.fire({
+        title: "Sure to Delete?",
+        text: "Are you sure to delete this assignment!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#610C9F",
+        cancelButtonColor: "#DC2626",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axiosInstance.delete(`/assignments/${_id}`, {headers: {Authorization: user?.email}})
+            .then(res => {
+              if (res.data.deletedCount === 1) {
+                refetch();
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success"
+                });
+              }
+            })
+            .catch(err => {
+              toast.error(err.message);
+            })
+        }
+      });
+    }
+    else {
+      Swal.fire({
+        title: "Not Possible!",
+        text: "You can't delete other's assignments",
+        icon: "error",
+        confirmButtonColor: "#610C9F"
+      });
+    }
+  }
 
   return (
     <div className='bg-gray-200 rounded-lg flex flex-col sm:flex-row justify-center sm:items-center'>
@@ -13,9 +72,10 @@ const AssignmentCard = ({assignment}) => {
         <h3 className='text-2xl font-medium mb-2 text-primary'>{title}</h3>
         <span className='block mb-1'><span className="font-bold">Marks:</span> {marks}</span>
         <span className='block mb-4'><span className="font-bold">Difficulty Level:</span> {difficultyLevel}</span>
-        <div className='flex items-center gap-2'>
+        <div className='flex flex-wrap items-center gap-2'>
           <Link to={`/assignments/${_id}`} className='btn btn-primary'>View</Link>
-          <Link to={`/assignments/update/${_id}`} className='btn btn-primary btn-outline'>Update</Link>
+          <button className='btn btn-primary btn-outline' onClick={handleUpdate}>Update</button>
+          <button className='btn btn-primary !bg-red-600 !border-red-600' onClick={handleDelete}>Delete</button>
         </div>
       </div>
     </div>
@@ -25,5 +85,6 @@ const AssignmentCard = ({assignment}) => {
 export default AssignmentCard;
 
 AssignmentCard.propTypes = {
-  assignment: PropTypes.object
+  assignment: PropTypes.object,
+  refetch: PropTypes.func
 }
