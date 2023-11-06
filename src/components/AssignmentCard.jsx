@@ -5,11 +5,11 @@ const AssignmentCard = ({assignment}) => {
   const {_id, thumbnail, title, marks, difficultyLevel} = assignment;
 
   return (
-    <div className='bg-gray-200 rounded-lg flex justify-center items-center gap-6 [&>*]:flex-1'>
-      <div>
-        <img className='rounded-b-lg md:rounded-b-none md:rounded-s-lg aspect-[4/3] object-cover object-center' src={thumbnail} alt={`${title}'s thumbnail`} />
+    <div className='bg-gray-200 rounded-lg flex flex-col sm:flex-row justify-center sm:items-center'>
+      <div className='w-full sm:w-2/5 max-h-[200px] h-full sm:max-h-none'>
+        <img className='rounded-t-lg sm:rounded-t-none sm:rounded-s-lg w-full h-full object-cover object-center' src={thumbnail} alt={`${title}'s thumbnail`} />
       </div>
-      <div>
+      <div className='sm:w-3/5 p-6'>
         <h3 className='text-2xl font-medium mb-2 text-primary'>{title}</h3>
         <span className='block mb-1'><span className="font-bold">Marks:</span> {marks}</span>
         <span className='block mb-4'><span className="font-bold">Difficulty Level:</span> {difficultyLevel}</span>

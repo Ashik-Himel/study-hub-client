@@ -39,7 +39,7 @@ const Assignments = () => {
           </div>
 
           {
-            !isLoading ? assignments?.length ? <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+            !isLoading ? assignments?.length ? <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
             {
               assignments?.map(assignment => <AssignmentCard key={assignment._id} assignment={assignment} />)
             }
