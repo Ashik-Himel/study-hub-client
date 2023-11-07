@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useContext, useState } from "react";
 import googleIcon from '../assets/images/google.png';
@@ -15,6 +15,8 @@ const Register = () => {
   const [showEye, setShowEye] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const prevState = useLocation()?.state;
+  const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -33,6 +35,9 @@ const Register = () => {
               .then(res => console.log(res.data));
             setUser(userCredential.user)
             toast.success("Registration Successful !!!");
+            if (prevState) {
+              navigate(prevState);
+            }
           })
           .catch((error) => {
             toast.error(error.message);
@@ -50,6 +55,9 @@ const Register = () => {
           .then(res => console.log(res.data));
         setUser(userCredential.user)
         toast.success('Login Successful !!!');
+        if (prevState) {
+          navigate(prevState);
+        }
       })
       .catch(error => {
         toast.error(error.code);
@@ -117,7 +125,7 @@ const Register = () => {
 
               <button type="submit" className="btn btn-primary btn-block !rounded-md mt-5" disabled={isActive ? "" : "disabled"}>Register</button>
             </form>
-            <p className="font-semibold text-center mt-5">Already have an account? <Link to='/login' className="text-primary" onClick={() => scrollTo(0, 0)}>Login</Link></p>
+            <p className="font-semibold text-center mt-5">Already have an account? <Link to='/login' className="text-primary" onClick={() => scrollTo(0, 0)} state={prevState}>Login</Link></p>
 
             <div className="flex justify-stretch items-center gap-6 my-6 w-4/5 mx-auto">
               <span className="h-[2px] bg-black flex-1"></span>
