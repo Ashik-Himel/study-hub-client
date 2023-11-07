@@ -30,7 +30,7 @@ const Header = () => {
     <header className={`py-4 ${pathname === '/' ? 'bg-gray-200' : 'bg-white'}`}>
       <div className="container">
         <nav className="flex justify-between items-center gap-6 relative">
-          <Link to='/' className="flex justify-center items-center gap-2">
+          <Link to='/' className="flex justify-center items-center gap-2" onClick={() => scrollTo(0, 0)}>
             <img className="max-w-[30px]" src="/favicon.png" alt="Brand Icon" />
             <span className="text-2xl font-semibold"><span className="text-primary">Study</span>Hub</span>
           </Link>
@@ -38,21 +38,21 @@ const Header = () => {
           <ul className="flex flex-col xl:flex-row justify-center items-center gap-6 fixed xl:static top-0 bottom-0 bg-white xl:bg-[transparent] w-4/5 max-w-[320px] xl:w-auto xl:max-w-none [box-shadow:-10px_0px_50px_rgba(0,0,0,0.3)] xl:[box-shadow:none] transition-[right] duration-300 z-30 text-xl xl:text-base" style={drawerShow ? {right: "0px"} : {right: "-400px"}}>
             <FaCircleXmark className="xl:hidden text-3xl text-primary absolute left-6 top-6 cursor-pointer" onClick={() => setDrawerShow(false)} />
             <li>
-              <NavLink to='/' className={({isActive}) => isActive ? "font-bold text-primary" : ""} onClick={() => setDrawerShow(false)}>Home</NavLink>
+              <NavLink to='/' className={({isActive}) => isActive ? "font-bold text-primary" : ""} onClick={() => {setDrawerShow(false); scrollTo(0, 0)}}>Home</NavLink>
             </li>
             <li>
-              <NavLink to='/assignments' className={({isActive}) => isActive ? "font-bold text-primary" : ""} onClick={() => setDrawerShow(false)}>Assignments</NavLink>
+              <NavLink to='/assignments' className={({isActive}) => isActive ? "font-bold text-primary" : ""} onClick={() => {setDrawerShow(false); scrollTo(0, 0)}}>Assignments</NavLink>
             </li>
             {
               userLoaded && user && <>
                 <li>
-                  <NavLink to='/my-assignments' className={({isActive}) => isActive ? "font-bold text-primary" : ""} onClick={() => setDrawerShow(false)}>My Assignments</NavLink>
+                  <NavLink to='/my-assignments' className={({isActive}) => isActive ? "font-bold text-primary" : ""} onClick={() => {setDrawerShow(false); scrollTo(0, 0)}}>My Assignments</NavLink>
                 </li>
                 <li>
-                  <NavLink to='/submitted-assignments' className={({isActive}) => isActive ? "font-bold text-primary" : ""} onClick={() => setDrawerShow(false)}>Submitted Assignments</NavLink>
+                  <NavLink to='/submitted-assignments' className={({isActive}) => isActive ? "font-bold text-primary" : ""} onClick={() => {setDrawerShow(false); scrollTo(0, 0)}}>Submitted Assignments</NavLink>
                 </li>
                 <li>
-                  <NavLink to='/create-assignment' className={({isActive}) => isActive ? "font-bold text-primary" : ""} onClick={() => setDrawerShow(false)}>Create Assignment</NavLink>
+                  <NavLink to='/create-assignment' className={({isActive}) => isActive ? "font-bold text-primary" : ""} onClick={() => {setDrawerShow(false); scrollTo(0, 0)}}>Create Assignment</NavLink>
                 </li>
               </>
             }
@@ -73,8 +73,8 @@ const Header = () => {
                 </div>
                 <button className="btn btn-warning hidden sm:inline-flex" onClick={() => {handleLogout(), setProfileShow(false)}}>Logout</button>
               </div> : <div className="flex justify-center items-center gap-2">
-                <Link to='/login' className="btn btn-primary">Login</Link>
-                <Link to='/register' className="btn btn-primary btn-outline hidden sm:inline-flex">Register</Link>
+                <Link to='/login' className="btn btn-primary" onClick={() => scrollTo(0, 0)}>Login</Link>
+                <Link to='/register' className="btn btn-primary btn-outline hidden sm:inline-flex" onClick={() => scrollTo(0, 0)}>Register</Link>
               </div> : <div className="flex justify-center items-center">
                 <span className="loading loading-spinner loading-md text-primary"></span>
               </div>

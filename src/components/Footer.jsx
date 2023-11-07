@@ -21,9 +21,9 @@ const Footer = () => {
 
           <div>
             <h2 className='text-2xl font-semibold mb-4'>Pages</h2>
-            <Link className='block mb-1' to='/'>Home</Link>
-            <Link className='block mb-1' to='/assignment'>Assignment</Link>
-            <Link className='block mb-1' to='/login'>Login</Link>
+            <Link className='block mb-1' to='/' onClick={() => scrollTo(0, 0)}>Home</Link>
+            <Link className='block mb-1' to='/assignment' onClick={() => scrollTo(0, 0)}>Assignment</Link>
+            <Link className='block mb-1' to='/login' onClick={() => scrollTo(0, 0)}>Login</Link>
           </div>
 
           <div>

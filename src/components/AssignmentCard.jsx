@@ -73,7 +73,7 @@ const AssignmentCard = ({assignment, refetch}) => {
         <span className='block mb-1'><span className="font-bold">Marks:</span> {marks}</span>
         <span className='block mb-4'><span className="font-bold">Difficulty Level:</span> {difficultyLevel}</span>
         <div className='flex flex-wrap items-center gap-2'>
-          <Link to={`/assignments/${_id}`} className='btn btn-primary'>View</Link>
+          <Link to={`/assignments/${_id}`} className='btn btn-primary' onClick={() => scrollTo(0, 0)}>View</Link>
           <button className='btn btn-primary btn-outline' onClick={handleUpdate}>Update</button>
           <button className='btn btn-primary !bg-red-600 !border-red-600' onClick={handleDelete}>Delete</button>
         </div>

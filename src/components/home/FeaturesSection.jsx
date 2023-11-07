@@ -14,19 +14,19 @@ const FeaturesSection = () => {
             <IoCreate className='text-6xl text-primary mb-2' />
             <h3 className='text-2xl font-semibold text-primary mb-2'>Create Assignment</h3>
             <p className='mb-4'>You can create assignment for all of your friends and they can work on it.</p>
-            <Link to='create-assignment' className='btn btn-primary'>Create</Link>
+            <Link to='create-assignment' className='btn btn-primary' onClick={() => scrollTo(0, 0)}>Create</Link>
           </div>
           <div className='bg-gray-200 p-6 rounded-lg'>
             <FaFilePdf className='text-5xl text-primary mb-4' />
             <h3 className='text-2xl font-semibold text-primary mb-2'>Submit Assignment</h3>
             <p className='mb-4'>You can submit assignment which was assigned by your friends and they can review it.</p>
-            <Link to='assignments' className='btn btn-primary'>Submit</Link>
+            <Link to='assignments' className='btn btn-primary' onClick={() => scrollTo(0, 0)}>Submit</Link>
           </div>
           <div className='bg-gray-200 p-6 rounded-lg'>
             <FaTwitch className='text-5xl text-primary mb-4' />
             <h3 className='text-2xl font-semibold text-primary mb-2'>Review Assignment</h3>
             <p className='mb-4'>You can review and give marks an assignment that was submitted by your friends.</p>
-            <Link to='submitted-assignments' className='btn btn-primary'>Review</Link>
+            <Link to='submitted-assignments' className='btn btn-primary' onClick={() => scrollTo(0, 0)}>Review</Link>
           </div>
         </div>
       </div>

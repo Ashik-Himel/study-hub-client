@@ -112,7 +112,7 @@ const Register = () => {
 
               <div className="flex items-center gap-1 mt-5">
                 <input className="cursor-pointer" type="checkbox" name="terms_and_conditions" id="terms_and_conditions" required />
-                <label htmlFor="terms_and_conditions">Accept <Link className="text-primary font-semibold">Terms and Conditions</Link></label>
+                <label htmlFor="terms_and_conditions">Accept <Link className="text-primary font-semibold" onClick={() => scrollTo(0, 0)}>Terms and Conditions</Link></label>
               </div>
 
               <button type="submit" className="btn btn-primary btn-block !rounded-md mt-5" disabled={isActive ? "" : "disabled"}>Register</button>
