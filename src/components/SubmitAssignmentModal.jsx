@@ -23,7 +23,7 @@ const SubmitAssignmentModal = ({showModal, setShowModal, assignmentId, assignmen
       .then(res => {
         if (res?.data?.insertedId) {
           toast.success("Assignment submitted !!!")
-          navigate('/submitted-assignments');
+          navigate('/my-assignments');
         }
       })
       .catch(err => {

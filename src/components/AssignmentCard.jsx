@@ -66,7 +66,7 @@ const AssignmentCard = ({assignment, refetch}) => {
   return (
     <div className='bg-gray-200 rounded-lg flex flex-col sm:flex-row justify-center sm:items-center'>
       <div className='w-full sm:w-2/5 max-h-[200px] h-full sm:max-h-none'>
-        <img className='rounded-t-lg sm:rounded-t-none sm:rounded-s-lg w-full h-full object-cover object-center' src={thumbnail} alt={`${title}'s thumbnail`} />
+        <img className='rounded-t-lg sm:rounded-t-none sm:!rounded-s-lg w-full h-full object-cover object-center' src={thumbnail} alt={`${title}'s thumbnail`} />
       </div>
       <div className='sm:w-3/5 p-6'>
         <h3 className='text-2xl font-medium mb-2 text-primary'>{title}</h3>
