@@ -23,7 +23,7 @@ const SubmitAssignmentModal = ({showModal, setShowModal, assignmentId, assignmen
       .then(res => {
         if (res?.data?.insertedId) {
           toast.success("Assignment submitted !!!")
-          navigate('/assignments');
+          navigate('/submitted-assignments');
         }
       })
       .catch(err => {
@@ -32,7 +32,7 @@ const SubmitAssignmentModal = ({showModal, setShowModal, assignmentId, assignmen
   }
 
   return (
-    <section className="fixed w-screen h-screen left-0 right-0 bg-black bg-opacity-40 flex justify-center items-center transition-[top] duration-300 z-40" style={showModal ? {top: "0px"} : {top: "-100%"}}>
+    <section className="fixed w-screen h-screen left-0 right-0 bg-black bg-opacity-40 flex justify-center items-center transition-[top] duration-300 z-40" style={showModal ? {top: "0px"} : {top: "-120%"}}>
       <form className="bg-white w-full max-w-[500px] m-6 p-6 rounded-lg" onSubmit={handleSubmit}>
         <h2 className="text-3xl font-medium mb-6 text-center">Submit Assignment</h2>
         <label className="font-semibold block mb-2" htmlFor="pdfLink">PDF Link</label>

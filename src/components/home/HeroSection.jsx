@@ -10,8 +10,8 @@ const HeroSection = () => {
             <h1 className="text-5xl font-semibold leading-[1.2] mb-2">Welcome to <span className="text-primary">Study</span>Hub!</h1>
             <p className="max-w-[550px]">StudyHub is an online group study based web platform, where people can took part in group study with his friends. They can create, submit, review assignments of each other in this platform.</p>
             <div className="flex items-center gap-2 mt-6">
-              <Link to="/submitted-assignments" className="btn btn-primary">Get Started</Link>
-              <Link to='/assignments' className="btn btn-primary btn-outline">Assignments</Link>
+              <Link to="/assignments" className="btn btn-primary">Assignments</Link>
+              <Link to='/create-assignment' className="btn btn-primary btn-outline">Create</Link>
             </div>
           </div>
 

@@ -13,8 +13,6 @@ const Login = () => {
   const {setUser} = useContext(GlobalContext);
   const [showPass, setShowPass] = useState(false);
   const [showEye, setShowEye] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -48,28 +46,9 @@ const Login = () => {
       })
   }
   const handlePassOnChange = e => {
-    setIsActive(false);
-    setErrorMsg("");
     const password = e.target.value;
-    if (password) setShowEye(true)
-    else setShowEye(false)
-
-    if (password.length < 6) {
-      setErrorMsg("Password must be at least 6 characters!");
-      return;
-    }
-    else if (!/[A-Z]/.test(password)) {
-      setErrorMsg("At least one uppercase character required!");
-      return;
-    }
-    else if (!/[0-9]/.test(password)) {
-      setErrorMsg("At least one number required!");
-      return;
-    }
-    else if (!/[^A-Za-z0-9]/.test(password)) {
-      return setErrorMsg("At least one special character required!");
-    }
-    setIsActive(true);
+    if (password) setShowEye(true);
+    else setShowEye(false);
   }
 
   return (
@@ -93,8 +72,7 @@ const Login = () => {
                   showEye ? showPass ? <AiFillEyeInvisible className="absolute top-1/2 right-4 -translate-y-1/2 text-2xl cursor-pointer" onClick={() => setShowPass(!showPass)} /> : <AiFillEye className="absolute top-1/2 right-4 -translate-y-1/2 text-2xl cursor-pointer" onClick={() => setShowPass(!showPass)} /> : ''
                 }
               </div>
-              <p className="text-red-600 font-semibold mt-3">{errorMsg}</p>
-              <button type="submit" className="btn btn-primary btn-block !rounded-md mt-5" disabled={isActive ? "" : "disabled"}>Login</button>
+              <button type="submit" className="btn btn-primary btn-block !rounded-md mt-5">Login</button>
             </form>
             <p className="font-semibold text-center mt-6">Don&apos;t have an account? <Link to='/register' className="text-primary" onClick={() => scrollTo(0, 0)}>Register</Link></p>
 

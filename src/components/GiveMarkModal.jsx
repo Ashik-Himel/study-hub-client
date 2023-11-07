@@ -29,7 +29,7 @@ const GiveMarkModal = ({showModal, setShowModal, assignment, refetch}) => {
   }
 
   return (
-    <section className="fixed w-screen h-screen left-0 right-0 bg-black bg-opacity-40 flex justify-center items-center transition-[top] duration-300 z-40" style={showModal ? {top: "0px"} : {top: "-100%"}}>
+    <section className="fixed w-screen h-screen left-0 right-0 bg-black bg-opacity-40 flex justify-center items-center transition-[top] duration-300 z-40" style={showModal ? {top: "0px"} : {top: "-120%"}}>
       <form className="bg-white w-full max-w-[600px] m-6 p-6 rounded-lg" onSubmit={handleSubmit}>
         <h2 className="text-3xl font-medium mb-6 text-center">Give Mark</h2>
         <p className='text-left mb-2'><span className="font-bold">PDF Link:</span> <a className='text-blue-700 underline' href={assignment?.pdfLink} target="_blank" rel="noopener noreferrer">{assignment?.pdfLink}</a></p>

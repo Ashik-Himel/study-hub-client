@@ -36,7 +36,7 @@ const Header = () => {
           </Link>
 
           <ul className="flex flex-col xl:flex-row justify-center items-center gap-6 fixed xl:static top-0 bottom-0 bg-white xl:bg-[transparent] w-4/5 max-w-[320px] xl:w-auto xl:max-w-none [box-shadow:-10px_0px_50px_rgba(0,0,0,0.3)] xl:[box-shadow:none] transition-[right] duration-300 z-30 text-xl xl:text-base" style={drawerShow ? {right: "0px"} : {right: "-400px"}}>
-            <FaCircleXmark className="xl:hidden text-2xl text-primary absolute left-6 top-6 cursor-pointer" onClick={() => setDrawerShow(false)} />
+            <FaCircleXmark className="xl:hidden text-3xl text-primary absolute left-6 top-6 cursor-pointer" onClick={() => setDrawerShow(false)} />
             <li>
               <NavLink to='/' className={({isActive}) => isActive ? "font-bold text-primary" : ""} onClick={() => setDrawerShow(false)}>Home</NavLink>
             </li>

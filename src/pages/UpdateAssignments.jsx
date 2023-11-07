@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { axiosInstance } from "../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
@@ -16,8 +16,13 @@ const assignmentFetcher = async(id, email) => {
 const UpdateAssignments = () => {
   const {id} = useParams();
   const {user} = useContext(GlobalContext);
-  const {data: assignment} = useQuery({queryKey: ['assignment', id], queryFn: () => assignmentFetcher(id, user?.email)});
-  const [dueDate, setDueDate] = useState(new Date(assignment?.dueDate));
+  const {data: assignment, isLoading} = useQuery({queryKey: ['assignment', id], queryFn: () => assignmentFetcher(id, user?.email)});
+  const [dueDate, setDueDate] = useState(new Date());
+  useEffect(() => {
+    if (!isLoading) {
+      setDueDate(new Date(assignment?.dueDate) || 0)
+    }
+  }, [isLoading, assignment]);
   const navigate = useNavigate();
   
   const handleUpdate = e => {
@@ -37,7 +42,7 @@ const UpdateAssignments = () => {
       .then(res => {
         if (res.data.modifiedCount === 1) {
           toast.success("Assignment Updated");
-          navigate(`/assignments/${id}`);
+          navigate(`/assignments`);
         }
       })
       .catch(err => {
@@ -79,10 +84,10 @@ const UpdateAssignments = () => {
               <div className="flex flex-col md:flex-row gap-4 md:gap-6">
                 <div className="flex-1">
                   <label className="block font-medium mb-2" htmlFor="difficulty-level">Difficulty Level</label>
-                  <select className="select w-full border-gray-300" name="difficulty-level" id="difficulty-level" required>
-                    <option value="Easy" selected={assignment?.difficultyLevel === "Easy" ? "selected": ""}>Easy</option>
-                    <option value="Medium" selected={assignment?.difficultyLevel === "Medium" ? "selected": ""}>Medium</option>
-                    <option value="Hard" selected={assignment?.difficultyLevel === "Hard" ? "selected": ""}>Hard</option>
+                  <select className="select w-full border-gray-300" name="difficulty-level" id="difficulty-level" defaultValue={assignment?.difficultyLevel} required>
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
                   </select>
                 </div>
                 <div className="flex-1">
