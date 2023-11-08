@@ -48,6 +48,7 @@ const Register = () => {
             setUser(userCredential.user)
             toast.success("Registration Successful !!!");
             if (prevState) {
+              scrollTo(0, 0);
               navigate(prevState);
             }
           })
@@ -67,6 +68,7 @@ const Register = () => {
         setUser(userCredential.user)
         toast.success('Login Successful !!!');
         if (prevState) {
+          scrollTo(0, 0);
           navigate(prevState);
         }
       })

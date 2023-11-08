@@ -34,6 +34,7 @@ const AssignmentCard = ({assignment, refetch, refetch2}) => {
 
   const handleUpdate = () => {
     if (author === user?.email) {
+      scrollTo(0, 0);
       navigate(`/assignments/update/${_id}`);
     }
     else {

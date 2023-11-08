@@ -18,6 +18,7 @@ const SubmitAssignmentModal = ({showModal, setShowModal, assignmentId, assignmen
   if (isSuccess) {
     if (resData?.insertedId) {
       toast.success("Assignment submitted !!!")
+      scrollTo(0, 0);
       navigate('/my-assignments');
     }
   }

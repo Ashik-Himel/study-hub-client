@@ -42,6 +42,7 @@ const Login = () => {
         setUser(userCredential.user)
         toast.success("Login Successful !!!");
         if (prevState) {
+          scrollTo(0, 0);
           navigate(prevState);
         }
       })
@@ -57,6 +58,7 @@ const Login = () => {
         setUser(userCredential.user)
         toast.success('Login Successful !!!');
         if (prevState) {
+          scrollTo(0, 0);
           navigate(prevState);
         }
       })

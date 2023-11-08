@@ -34,6 +34,7 @@ const UpdateAssignments = () => {
   if (isSuccess) {
     if (resData?.modifiedCount === 1) {
       toast.success("Assignment Updated");
+      scrollTo(0, 0);
       navigate(`/assignments`);
     }
   }

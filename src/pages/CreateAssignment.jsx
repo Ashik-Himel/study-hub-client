@@ -22,6 +22,7 @@ const CreateAssignment = () => {
   if (isSuccess) {
     if (resData?.insertedId) {
       toast.success("Assignment Added");
+      scrollTo(0, 0);
       navigate('/assignments');
     }
   }
