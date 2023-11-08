@@ -8,6 +8,7 @@ import { auth } from "../firebase.config";
 import toast from "react-hot-toast";
 import { GlobalContext } from "../context/ContextProvider";
 import { axiosInstance } from "../hooks/useAxios";
+import { useMutation } from "@tanstack/react-query";
 
 const Register = () => {
   const {setUser} = useContext(GlobalContext);
@@ -17,6 +18,18 @@ const Register = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const prevState = useLocation()?.state;
   const navigate = useNavigate();
+
+  const loginFetcher = async(email) => {
+    const res = await axiosInstance.post('/login', {email});
+    return res.data;
+  }
+  const {mutate, data: resData, isSuccess, isError, error} = useMutation({mutationFn: loginFetcher});
+  if (isSuccess) {
+    console.log(resData);
+  }
+  if (isError) {
+    toast.error(error.message);
+  }
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -31,8 +44,7 @@ const Register = () => {
       .then((userCredential) => {
         updateProfile(auth.currentUser, {displayName, photoURL})
           .then(() => {
-            axiosInstance.post('/login', {email})
-              .then(res => console.log(res.data));
+            mutate(email);
             setUser(userCredential.user)
             toast.success("Registration Successful !!!");
             if (prevState) {
@@ -51,8 +63,7 @@ const Register = () => {
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(auth, googleProvider)
       .then((userCredential) => {
-        axiosInstance.post('/login', {email: userCredential.user?.email})
-          .then(res => console.log(res.data));
+        mutate(userCredential?.user?.email)
         setUser(userCredential.user)
         toast.success('Login Successful !!!');
         if (prevState) {

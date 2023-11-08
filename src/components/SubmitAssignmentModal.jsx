@@ -4,10 +4,27 @@ import { GlobalContext } from '../context/ContextProvider';
 import { axiosInstance } from '../hooks/useAxios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 
 const SubmitAssignmentModal = ({showModal, setShowModal, assignmentId, assignmentTitle, assignmentMarks}) => {
   const {user} = useContext(GlobalContext);
   const navigate = useNavigate();
+
+  const submitFetcher = async(submittedAssignment) => {
+    const res = await axiosInstance.post('/submitted-assignments', submittedAssignment, {headers: {Authorization: user?.email}});
+    return res.data;
+  }
+  const {mutate, data: resData, isSuccess, isError, error} = useMutation({mutationFn: submitFetcher});
+  if (isSuccess) {
+    if (resData?.insertedId) {
+      toast.success("Assignment submitted !!!")
+      navigate('/my-assignments');
+    }
+  }
+  if (isError) {
+    toast.error(error?.message);
+  }
+
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -18,17 +35,7 @@ const SubmitAssignmentModal = ({showModal, setShowModal, assignmentId, assignmen
     const authorName = user?.displayName;
     const authorEmail = user?.email;
     const submittedAssignment = {assignmentId, assignmentTitle, assignmentMarks, pdfLink, note, status, authorName, authorEmail};
-
-    axiosInstance.post('/submitted-assignments', submittedAssignment, {headers: {Authorization: user?.email}})
-      .then(res => {
-        if (res?.data?.insertedId) {
-          toast.success("Assignment submitted !!!")
-          navigate('/my-assignments');
-        }
-      })
-      .catch(err => {
-        toast.error(err.message)
-      })
+    mutate(submittedAssignment);
   }
 
   return (

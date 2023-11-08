@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useContext, useEffect, useState } from "react";
 import { axiosInstance } from "../hooks/useAxios";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from "../context/ContextProvider";
 import toast from "react-hot-toast";
@@ -24,6 +24,21 @@ const UpdateAssignments = () => {
     }
   }, [isLoading, assignment]);
   const navigate = useNavigate();
+
+  const updateFetcher = async(updateAssignment) => {
+    const res = await axiosInstance.put(`/assignments/${id}`, updateAssignment, {headers: {Authorization: user?.email}});
+    return res.data;
+  }
+  const {mutate, data: resData, isSuccess, isError, error} = useMutation({mutationFn: updateFetcher});
+  if (isSuccess) {
+    if (resData?.modifiedCount === 1) {
+      toast.success("Assignment Updated");
+      navigate(`/assignments`);
+    }
+  }
+  if (isError) {
+    toast.error(error.message);
+  }
   
   const handleUpdate = e => {
     e.preventDefault();
@@ -37,17 +52,7 @@ const UpdateAssignments = () => {
     const description = form.description.value;
     const author = user?.email;
     const updateAssignment = {title, marks, thumbnail, image, difficultyLevel, dueDate, description, author}
-
-    axiosInstance.put(`/assignments/${id}`, updateAssignment, {headers: {Authorization: user?.email}})
-      .then(res => {
-        if (res.data.modifiedCount === 1) {
-          toast.success("Assignment Updated");
-          navigate(`/assignments`);
-        }
-      })
-      .catch(err => {
-        toast.error(err.message);
-      })
+    mutate(updateAssignment);
   }
 
   return (

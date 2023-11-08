@@ -3,9 +3,27 @@ import { axiosInstance } from '../hooks/useAxios';
 import { useContext } from 'react';
 import { GlobalContext } from '../context/ContextProvider';
 import toast from 'react-hot-toast';
+import { useMutation } from '@tanstack/react-query';
 
 const GiveMarkModal = ({showModal, setShowModal, assignment, refetch}) => {
   const {user} = useContext(GlobalContext);
+
+  const updateFetcher = async(updatedAssignment) => {
+    const res = await axiosInstance.put(`/submitted-assignments?id=${assignment?._id}`, updatedAssignment, {headers: {Authorization: user?.email}});
+    return res.data;
+  }
+  const {mutate, data: resData, isSuccess, isError, error} = useMutation({mutationFn: updateFetcher});
+  if (isSuccess) {
+    if (resData?.modifiedCount === 1) {
+      toast.success("Mark Given !!!");
+      refetch();
+      setShowModal(false);
+    }
+  }
+  if (isError) {
+    toast.error(error?.message);
+  }
+
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -14,18 +32,7 @@ const GiveMarkModal = ({showModal, setShowModal, assignment, refetch}) => {
     updatedAssignment.obtainedMark = e.target.mark.value;
     updatedAssignment.feedback = e.target.feedback.value;
     delete updatedAssignment._id;
-
-    axiosInstance.put(`/submitted-assignments?id=${assignment?._id}`, updatedAssignment, {headers: {Authorization: user?.email}})
-      .then(res => {
-        if (res?.data?.modifiedCount === 1) {
-          toast.success("Mark Given !!!");
-          refetch();
-          setShowModal(false);
-        }
-      })
-      .catch(err => {
-        toast.error(err.message);
-      })
+    mutate(updatedAssignment);
   }
 
   return (

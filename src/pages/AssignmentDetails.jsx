@@ -34,7 +34,7 @@ const AssignmentDetails = () => {
       <section className="mt-10">
         <div className="container">
           <div className="flex flex-col sm:flex-row items-center bg-gray-200 rounded-lg">
-            <img className="self-stretch w-full sm:w-1/2  max-h-[300px] object-cover object-center rounded-t-lg sm:rounded-t-none sm:rounded-s-lg" src={assignment?.image} alt={`${assignment.title}'s Image`} />
+            <img className="self-stretch w-full sm:w-1/2  max-h-[300px] object-cover object-center rounded-t-lg sm:rounded-t-none sm:!rounded-s-lg" src={assignment?.image} alt={`${assignment.title}'s Image`} />
             <div className="w-full sm:w-1/2 p-6">
               <h2 className="text-3xl font-medium mb-4">{assignment?.title}</h2>
               <span className="block mb-1"><span className="font-bold">Marks:</span> {assignment?.marks}</span>

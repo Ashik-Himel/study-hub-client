@@ -75,11 +75,32 @@ const Assignments = () => {
           </div>
 
           {
-            !isLoading ? assignments?.length ? <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {
-              assignments?.map(assignment => <AssignmentCard key={assignment._id} assignment={assignment} refetch={refetch} />)
-            }
-          </div> : <div className="mt-10 text-center">
+            !isLoading ? assignments?.length ? <div>
+              <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {
+                  assignments?.map(assignment => <AssignmentCard key={assignment._id} assignment={assignment} refetch={refetch} refetch2={refetch2} />)
+                }
+              </div>
+              <div className="mt-8">
+                <div className="container">
+                  <nav>
+                    <ul className="flex flex-wrap justify-center items-center -space-x-px text-sm">
+                      <li>
+                        <button className="flex items-center justify-center px-3 h-8 ml-0 leading-tight bg-white border border-gray-500 rounded-l-lg hover:bg-primary hover:text-white disabled:!bg-gray-300 disabled:!text-black disabled:cursor-not-allowed" disabled={page === 1 ? "disabled" : ""} onClick={() => {setPage(page-1);refetch();}}>Prev</button>
+                      </li>
+                      {
+                        pageTrack?.map(pageNum => <li key={pageNum}>
+                          <button className="flex items-center justify-center px-3 h-8 leading-tight bg-white border border-gray-500 hover:bg-primary hover:text-white" style={pageNum === page ? {backgroundColor: "#610C9F", color: "white"} : {}} onClick={() => {setPage(pageNum), refetch(), scrollTo(0, 0)}}>{pageNum}</button>
+                        </li>)
+                      }
+                      <li>
+                        <button className="flex items-center justify-center px-3 h-8 leading-tight bg-white border border-gray-500 rounded-r-lg hover:bg-primary hover:text-white disabled:!bg-gray-300 disabled:!text-black disabled:cursor-not-allowed" disabled={page === pageTrack?.length ? "disabled" : ""} onClick={() => {setPage(page+1);refetch();}}>Next</button>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div> : <div className="mt-10 text-center">
             <div className="container">
               <img className="w-[150px] mx-auto mb-4" src={emptyIcon} alt="Empty Icon" />
               <h3 className="text-2xl sm:text-3xl font-medium">No Assignment Found !!!</h3>
@@ -88,26 +109,6 @@ const Assignments = () => {
             <span className="loading loading-spinner loading-lg text-primary"></span>
           </div>
           }
-        </div>
-      </section>
-
-      <section className="mt-8">
-        <div className="container">
-          <nav>
-            <ul className="flex flex-wrap justify-center items-center -space-x-px text-sm">
-              <li>
-                <button className="flex items-center justify-center px-3 h-8 ml-0 leading-tight bg-white border border-gray-500 rounded-l-lg hover:bg-primary hover:text-white disabled:!bg-gray-300 disabled:!text-black disabled:cursor-not-allowed" disabled={page === 1 ? "disabled" : ""} onClick={() => {setPage(page-1);refetch();}}>Prev</button>
-              </li>
-              {
-                pageTrack?.map(pageNum => <li key={pageNum}>
-                  <button className="flex items-center justify-center px-3 h-8 leading-tight bg-white border border-gray-500 hover:bg-primary hover:text-white" style={pageNum === page ? {backgroundColor: "#610C9F", color: "white"} : {}} onClick={() => {setPage(pageNum), refetch(), scrollTo(0, 0)}}>{pageNum}</button>
-                </li>)
-              }
-              <li>
-                <button className="flex items-center justify-center px-3 h-8 leading-tight bg-white border border-gray-500 rounded-r-lg hover:bg-primary hover:text-white disabled:!bg-gray-300 disabled:!text-black disabled:cursor-not-allowed" disabled={page === pageTrack?.length ? "disabled" : ""} onClick={() => {setPage(page+1);refetch();}}>Next</button>
-              </li>
-            </ul>
-          </nav>
         </div>
       </section>
     </main>

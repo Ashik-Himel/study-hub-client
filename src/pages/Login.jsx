@@ -8,6 +8,7 @@ import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 
 import toast from "react-hot-toast";
 import { GlobalContext } from "../context/ContextProvider";
 import { axiosInstance } from "../hooks/useAxios";
+import { useMutation } from "@tanstack/react-query";
 
 const Login = () => {
   const {setUser} = useContext(GlobalContext);
@@ -16,6 +17,18 @@ const Login = () => {
   const prevState = useLocation()?.state;
   const navigate = useNavigate();
 
+  const loginFetcher = async(email) => {
+    const res = await axiosInstance.post('/login', {email});
+    return res.data;
+  }
+  const {mutate, data: resData, isSuccess, isError, error} = useMutation({mutationFn: loginFetcher});
+  if (isSuccess) {
+    console.log(resData);
+  }
+  if (isError) {
+    toast.error(error.message);
+  }
+ 
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -25,8 +38,7 @@ const Login = () => {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        axiosInstance.post('/login', {email})
-          .then(res => console.log(res.data));
+        mutate(email);
         setUser(userCredential.user)
         toast.success("Login Successful !!!");
         if (prevState) {
@@ -41,8 +53,7 @@ const Login = () => {
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(auth, googleProvider)
       .then((userCredential) => {
-        axiosInstance.post('/login', {email: userCredential.user?.email})
-          .then(res => console.log(res.data));
+        mutate(userCredential?.user?.email)
         setUser(userCredential.user)
         toast.success('Login Successful !!!');
         if (prevState) {

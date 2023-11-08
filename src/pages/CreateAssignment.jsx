@@ -6,11 +6,27 @@ import { axiosInstance } from "../hooks/useAxios";
 import { GlobalContext } from "../context/ContextProvider";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 
 const CreateAssignment = () => {
   const {user} = useContext(GlobalContext);
   const [dueDate, setDueDate] = useState(new Date());
   const navigate = useNavigate();
+
+  const createAssignmentFunc = async(assignment) => {
+    const res = await axiosInstance.post('/assignments', assignment, {headers: {Authorization: user?.email}});
+    return res.data;
+  }
+  const {mutate, data: resData, isSuccess, isError, error} = useMutation({mutationFn: createAssignmentFunc})
+  if (isSuccess) {
+    if (resData?.insertedId) {
+      toast.success("Assignment Added");
+      navigate('/assignments');
+    }
+  }
+  if (isError) {
+    toast.error(error?.message);
+  }
   
   const handleCreate = e => {
     e.preventDefault();
@@ -24,17 +40,7 @@ const CreateAssignment = () => {
     const description = form.description.value;
     const author = user?.email;
     const createAssignment = {title, marks, thumbnail, image, difficultyLevel, dueDate, description, author};
-
-    axiosInstance.post('/assignments', createAssignment, {headers: {Authorization: user?.email}})
-      .then(res => {
-        if (res.data.insertedId) {
-          toast.success("Assignment Added");
-          navigate('/assignments');
-        }
-      })
-      .catch(err => {
-        toast.error(err.message);
-      })
+    mutate(createAssignment);
   }
 
   return (

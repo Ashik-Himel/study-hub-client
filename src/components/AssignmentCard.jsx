@@ -5,11 +5,32 @@ import { GlobalContext } from '../context/ContextProvider';
 import Swal from 'sweetalert2'
 import { axiosInstance } from '../hooks/useAxios';
 import toast from 'react-hot-toast';
+import { useMutation } from '@tanstack/react-query';
 
-const AssignmentCard = ({assignment, refetch}) => {
+const AssignmentCard = ({assignment, refetch, refetch2}) => {
   const {user} = useContext(GlobalContext);
   const {_id, thumbnail, title, marks, difficultyLevel, author} = assignment;
   const navigate = useNavigate();
+
+  const deleteFetcher = async() => {
+    const res = await axiosInstance.delete(`/assignments/${_id}`, {headers: {Authorization: user?.email}});
+    return res.data;
+  }
+  const {mutate, data: resData, isSuccess, isError, error} = useMutation({mutationFn: deleteFetcher});
+  if (isSuccess) {
+    if (resData?.deletedCount === 1) {
+      refetch();
+      refetch2();
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your file has been deleted.",
+        icon: "success"
+      })
+    }
+  }
+  if (isError) {
+    toast.error(error?.message);
+  }
 
   const handleUpdate = () => {
     if (author === user?.email) {
@@ -35,21 +56,8 @@ const AssignmentCard = ({assignment, refetch}) => {
         cancelButtonColor: "#DC2626",
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
-        if (result.isConfirmed) {
-          axiosInstance.delete(`/assignments/${_id}`, {headers: {Authorization: user?.email}})
-            .then(res => {
-              if (res.data.deletedCount === 1) {
-                refetch();
-                Swal.fire({
-                  title: "Deleted!",
-                  text: "Your file has been deleted.",
-                  icon: "success"
-                });
-              }
-            })
-            .catch(err => {
-              toast.error(err.message);
-            })
+        if (result?.isConfirmed) {
+          mutate();
         }
       });
     }
@@ -86,5 +94,6 @@ export default AssignmentCard;
 
 AssignmentCard.propTypes = {
   assignment: PropTypes.object,
-  refetch: PropTypes.func
+  refetch: PropTypes.func,
+  refetch2: PropTypes.func
 }
