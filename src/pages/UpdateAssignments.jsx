@@ -7,6 +7,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from "../context/ContextProvider";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const assignmentFetcher = async(id, email) => {
   const res = await axiosInstance(`/assignments/${id}`, {headers: {Authorization: email}});
@@ -51,7 +52,15 @@ const UpdateAssignments = () => {
     const difficultyLevel = form["difficulty-level"].value;
     const description = form.description.value;
     const author = user?.email;
-    const updateAssignment = {title, marks, thumbnail, image, difficultyLevel, dueDate, description, author}
+    const updateAssignment = {title, marks, thumbnail, image, difficultyLevel, dueDate, description, author};
+    if (dueDate <= new Date()) {
+      return Swal.fire({
+        title: "Warning!",
+        text: "You should give minimum 1 day assignment duration.",
+        icon: "error",
+        confirmButtonColor: "#610C9F"
+      });
+    }
     mutate(updateAssignment);
   }
 
@@ -73,7 +82,7 @@ const UpdateAssignments = () => {
                 </div>
                 <div className="flex-1">
                   <label className="block font-medium mb-2" htmlFor="marks">Marks</label>
-                  <input className="input w-full border-gray-300" type="number" name="marks" id="marks" placeholder="Enter assignment marks" defaultValue={assignment?.marks} required />
+                  <input className="input w-full border-gray-300" type="number" name="marks" id="marks" placeholder="Enter assignment marks" min="1" defaultValue={assignment?.marks} required />
                 </div>
               </div>
               <div className="flex flex-col md:flex-row gap-4 md:gap-6">

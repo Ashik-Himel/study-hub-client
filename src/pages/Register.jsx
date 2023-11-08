@@ -115,7 +115,7 @@ const Register = () => {
               <input className="input w-full border-gray-300 mb-5" type="text" name="name" id="name" placeholder="Enter your name" required />
 
               <label htmlFor="photo" className="block font-semibold mb-2">Photo URL</label>
-              <input className="input w-full border-gray-300 mb-5" type="text" name="photo" id="photo" placeholder="Enter your photo url" required />
+              <input className="input w-full border-gray-300 mb-5" type="url" name="photo" id="photo" placeholder="Enter your photo url" required />
 
               <label htmlFor="email" className="block font-semibold mb-2">Email</label>
               <input className="input w-full border-gray-300 mb-5" type="email" name="email" id="email" placeholder="Enter your email address" required />
