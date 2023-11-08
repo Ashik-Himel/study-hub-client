@@ -26,3 +26,7 @@
 .react-datepicker__triangle {
   @apply !-left-[120px]
 }
+
+.react-pdf__Page {
+  @apply !bg-gray-300 p-4 flex justify-center;
+}
